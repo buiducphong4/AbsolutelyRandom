@@ -23,6 +23,73 @@
     --line-strong: rgba(245, 241, 232, 0.18);
   }
 
+  /* ══ NEON TOKYO ══ */
+  body.theme-neon {
+    --bg-0: #080812; --bg-1: #0e0d1f; --bg-2: #161428;
+    --ink: #f0e6ff; --ink-dim: #8c7fb0; --ink-faint: #4a4270;
+    --gold: #ff2d78; --gold-bright: #ff6ba8;
+    --crimson: #ff8c00; --emerald: #00f5ff;
+    --line: rgba(240,230,255,0.08); --line-strong: rgba(240,230,255,0.18);
+  }
+  body.theme-neon::after {
+    background:
+      radial-gradient(ellipse 80% 60% at 50% 0%, rgba(255,45,120,0.14), transparent 70%),
+      radial-gradient(ellipse 60% 80% at 100% 100%, rgba(0,245,255,0.1), transparent 70%),
+      radial-gradient(ellipse 60% 80% at 0% 100%, rgba(123,47,255,0.12), transparent 70%);
+  }
+
+  /* ══ SAKURA ══ */
+  body.theme-sakura {
+    --bg-0: #1a0a12; --bg-1: #24101a; --bg-2: #2e1522;
+    --ink: #fef0f5; --ink-dim: #c4909a; --ink-faint: #7a5060;
+    --gold: #ff8bab; --gold-bright: #ffadc4;
+    --crimson: #ff4466; --emerald: #80d4a0;
+    --line: rgba(254,240,245,0.08); --line-strong: rgba(254,240,245,0.18);
+  }
+  body.theme-sakura::after {
+    background:
+      radial-gradient(ellipse 80% 60% at 50% 0%, rgba(255,139,171,0.14), transparent 70%),
+      radial-gradient(ellipse 60% 80% at 100% 100%, rgba(255,68,102,0.07), transparent 70%),
+      radial-gradient(ellipse 60% 80% at 0% 100%, rgba(128,212,160,0.07), transparent 70%);
+  }
+
+  /* ══ DEEP OCEAN ══ */
+  body.theme-ocean {
+    --bg-0: #020c18; --bg-1: #061520; --bg-2: #0a1e2c;
+    --ink: #c8f4ff; --ink-dim: #5a9ab0; --ink-faint: #2a5068;
+    --gold: #00e5b0; --gold-bright: #40ffcc;
+    --crimson: #ff4d6a; --emerald: #00b5ff;
+    --line: rgba(200,244,255,0.08); --line-strong: rgba(200,244,255,0.18);
+  }
+  body.theme-ocean::after {
+    background:
+      radial-gradient(ellipse 80% 60% at 50% 0%, rgba(0,229,176,0.12), transparent 70%),
+      radial-gradient(ellipse 60% 80% at 100% 100%, rgba(123,47,255,0.1), transparent 70%),
+      radial-gradient(ellipse 60% 80% at 0% 100%, rgba(0,181,255,0.1), transparent 70%);
+  }
+
+  /* ══ Theme picker grid ══ */
+  .theme-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin-top: 6px; }
+  .theme-option {
+    display: flex; flex-direction: column; align-items: center; gap: 6px;
+    cursor: pointer; padding: 10px 6px;
+    border: 1px solid var(--line-strong); border-radius: 3px;
+    transition: all 0.2s; user-select: none;
+  }
+  .theme-option input { display: none; }
+  .theme-option:hover { border-color: var(--gold); background: rgba(255,255,255,0.03); }
+  .theme-option.t-active { border-color: var(--gold); background: rgba(255,255,255,0.06); }
+  .theme-swatch {
+    width: 44px; height: 44px; border-radius: 50%;
+    border: 1px solid rgba(255,255,255,0.12);
+    box-shadow: 0 2px 8px rgba(0,0,0,0.4);
+  }
+  .theme-name {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.6rem; letter-spacing: 0.08em;
+    color: var(--ink-dim); text-transform: uppercase; text-align: center;
+  }
+
   * { margin: 0; padding: 0; box-sizing: border-box; }
   html, body { height: 100%; }
 
@@ -1102,6 +1169,32 @@
   </div>
 
   <div class="setting-group">
+    <label class="setting-label">Visual Theme</label>
+    <div class="theme-grid">
+      <label class="theme-option t-active" data-theme="fortuna">
+        <input type="radio" name="theme" value="fortuna" checked>
+        <span class="theme-swatch" style="background:conic-gradient(#0b0a0e 0 50%,#d4a945 50% 75%,#c73e3a 75%)"></span>
+        <span class="theme-name">Fortuna</span>
+      </label>
+      <label class="theme-option" data-theme="neon">
+        <input type="radio" name="theme" value="neon">
+        <span class="theme-swatch" style="background:conic-gradient(#080812 0 50%,#ff2d78 50% 75%,#00f5ff 75%)"></span>
+        <span class="theme-name">Neon Tokyo</span>
+      </label>
+      <label class="theme-option" data-theme="sakura">
+        <input type="radio" name="theme" value="sakura">
+        <span class="theme-swatch" style="background:conic-gradient(#1a0a12 0 50%,#ff8bab 50% 75%,#80d4a0 75%)"></span>
+        <span class="theme-name">Sakura</span>
+      </label>
+      <label class="theme-option" data-theme="ocean">
+        <input type="radio" name="theme" value="ocean">
+        <span class="theme-swatch" style="background:conic-gradient(#020c18 0 50%,#00e5b0 50% 75%,#7b2fff 75%)"></span>
+        <span class="theme-name">Deep Ocean</span>
+      </label>
+    </div>
+  </div>
+
+  <div class="setting-group">
     <label class="setting-label">Trigger Methods</label>
     <div class="setting-hint" style="margin-top: 4px;">
       ◆ Triple-click the dot at bottom-right corner<br>
@@ -1126,11 +1219,29 @@
     secretTimer: null,
   };
 
-  const colors = [
+  let colors = [
     '#c73e3a', '#d4a945', '#3a7d5c', '#2e5c8a',
     '#8b4789', '#b85d3a', '#5c7a3d', '#3d6b7a',
     '#a83c5c', '#c4923a', '#4a6b4a', '#5a4a7a'
   ];
+
+  const themeConfigs = {
+    fortuna: { cls: '', colors: ['#c73e3a','#d4a945','#3a7d5c','#2e5c8a','#8b4789','#b85d3a','#5c7a3d','#3d6b7a','#a83c5c','#c4923a','#4a6b4a','#5a4a7a'] },
+    neon:    { cls: 'theme-neon',   colors: ['#ff2d78','#ff6b00','#7b2fff','#00c8ff','#ff00aa','#ff9900','#aa00ff','#00ddff','#ff4466','#ff8800','#9900ff','#00ccff'] },
+    sakura:  { cls: 'theme-sakura', colors: ['#d45070','#e87895','#c04868','#f098b0','#b83d60','#e06888','#cf5878','#efaec0','#be4d6e','#e896a6','#d37098','#eea0b6'] },
+    ocean:   { cls: 'theme-ocean',  colors: ['#00e5b0','#00b5ff','#7b2fff','#00d8c8','#5522ff','#00d5c8','#2244ff','#00ccb4','#6600ff','#00c8ff','#8833ff','#00dcc0'] },
+  };
+
+  function cssVar(v) { return getComputedStyle(document.documentElement).getPropertyValue(v).trim(); }
+
+  function applyTheme(name) {
+    const cfg = themeConfigs[name]; if (!cfg) return;
+    document.body.classList.remove('theme-neon','theme-sakura','theme-ocean');
+    if (cfg.cls) document.body.classList.add(cfg.cls);
+    colors.length = 0; cfg.colors.forEach(c => colors.push(c));
+    document.querySelectorAll('.theme-option').forEach(el => el.classList.toggle('t-active', el.dataset.theme === name));
+    drawWheel(); drawTicks();
+  }
 
   const $ = id => document.getElementById(id);
   const wheel = $('wheel');
@@ -1181,7 +1292,9 @@
       const y1 = 300 + r1 * Math.sin(rad);
       const x2 = 300 + r2 * Math.cos(rad);
       const y2 = 300 + r2 * Math.sin(rad);
-      html += `<line x1="${x1}" y1="${y1}" x2="${x2}" y2="${y2}" stroke="${isMajor ? '#d4a945' : '#4a4656'}" stroke-width="${isMajor ? 1 : 0.5}" opacity="${isMajor ? 0.6 : 0.4}"/>`;
+      const tc = cssVar('--gold') || '#d4a945';
+      const td = cssVar('--ink-faint') || '#4a4656';
+      html += `<line x1="${x1}" y1="${y1}" x2="${x2}" y2="${y2}" stroke="${isMajor ? tc : td}" stroke-width="${isMajor ? 1 : 0.5}" opacity="${isMajor ? 0.6 : 0.4}"/>`;
     }
     ticks.innerHTML = html;
   }
@@ -1202,6 +1315,11 @@
   function drawWheel() {
     const n = state.names.length;
     wheel.innerHTML = '';
+    const accent = cssVar('--gold') || '#d4a945';
+    const bg0    = cssVar('--bg-0') || '#0b0a0e';
+    const bg1    = cssVar('--bg-1') || '#13121a';
+    const inkF   = cssVar('--ink-faint') || '#4a4656';
+    const ink    = cssVar('--ink') || '#f5f1e8';
 
     let defs = '<defs>';
     colors.forEach((c, i) => {
@@ -1212,10 +1330,10 @@
     if (n === 0) {
       wheel.innerHTML = `
         ${defs}
-        <circle cx="200" cy="200" r="195" fill="#13121a" stroke="#d4a945" stroke-width="1" stroke-dasharray="3,6" opacity="0.4"/>
-        <circle cx="200" cy="200" r="180" fill="none" stroke="#4a4656" stroke-width="0.5" stroke-dasharray="2,4"/>
+        <circle cx="200" cy="200" r="195" fill="${bg1}" stroke="${accent}" stroke-width="1" stroke-dasharray="3,6" opacity="0.4"/>
+        <circle cx="200" cy="200" r="180" fill="none" stroke="${inkF}" stroke-width="0.5" stroke-dasharray="2,4"/>
         <text x="200" y="200" text-anchor="middle" dominant-baseline="middle" class="wheel-empty-text">Awaiting entries</text>
-        <text x="200" y="225" text-anchor="middle" dominant-baseline="middle" fill="#4a4656" font-family="JetBrains Mono" font-size="10" letter-spacing="2">ADD NAMES TO BEGIN</text>
+        <text x="200" y="225" text-anchor="middle" dominant-baseline="middle" fill="${inkF}" font-family="JetBrains Mono" font-size="10" letter-spacing="2">ADD NAMES TO BEGIN</text>
       `;
       return;
     }
@@ -1223,8 +1341,8 @@
     if (n === 1) {
       wheel.innerHTML = `
         ${defs}
-        <circle cx="200" cy="200" r="195" fill="url(#g0)" stroke="#0b0a0e" stroke-width="2"/>
-        <text x="200" y="200" text-anchor="middle" dominant-baseline="middle" fill="#f5f1e8" font-family="Cormorant Garamond" font-style="italic" font-size="28" font-weight="500">${escapeXml(state.names[0])}</text>
+        <circle cx="200" cy="200" r="195" fill="url(#g0)" stroke="${bg0}" stroke-width="2"/>
+        <text x="200" y="200" text-anchor="middle" dominant-baseline="middle" fill="${ink}" font-family="Cormorant Garamond" font-style="italic" font-size="28" font-weight="500">${escapeXml(state.names[0])}</text>
       `;
       return;
     }
@@ -1248,7 +1366,7 @@
       const path = `M ${cx} ${cy} L ${x1} ${y1} A ${r} ${r} 0 ${largeArc} 1 ${x2} ${y2} Z`;
       const colorIdx = i % colors.length;
 
-      svgContent += `<path d="${path}" fill="url(#g${colorIdx})" stroke="#0b0a0e" stroke-width="1.5"/>`;
+      svgContent += `<path d="${path}" fill="url(#g${colorIdx})" stroke="${bg0}" stroke-width="1.5"/>`;
 
       const innerR = r * 0.82;
       const ix1 = cx + innerR * Math.cos(startRad);
@@ -1256,7 +1374,7 @@
       const ix2 = cx + innerR * Math.cos(endRad);
       const iy2 = cy + innerR * Math.sin(endRad);
       const innerPath = `M ${ix1} ${iy1} A ${innerR} ${innerR} 0 ${largeArc} 1 ${ix2} ${iy2}`;
-      svgContent += `<path d="${innerPath}" fill="none" stroke="rgba(245, 241, 232, 0.15)" stroke-width="0.5"/>`;
+      svgContent += `<path d="${innerPath}" fill="none" stroke="rgba(255,255,255,0.12)" stroke-width="0.5"/>`;
 
       const textAngle = startAngle + anglePerSlice / 2;
       const textRad = textAngle * Math.PI / 180;
@@ -1271,11 +1389,11 @@
 
       const fontSize = n > 18 ? 10 : n > 12 ? 13 : n > 8 ? 16 : n > 4 ? 19 : 22;
 
-      svgContent += `<text x="${tx}" y="${ty}" text-anchor="middle" dominant-baseline="middle" fill="#f5f1e8" font-family="Cormorant Garamond" font-style="italic" font-weight="500" font-size="${fontSize}" transform="rotate(${textAngle + 90}, ${tx}, ${ty})" style="paint-order: stroke; stroke: rgba(11, 10, 14, 0.5); stroke-width: 2;">${escapeXml(displayName)}</text>`;
+      svgContent += `<text x="${tx}" y="${ty}" text-anchor="middle" dominant-baseline="middle" fill="${ink}" font-family="Cormorant Garamond" font-style="italic" font-weight="500" font-size="${fontSize}" transform="rotate(${textAngle + 90}, ${tx}, ${ty})" style="paint-order: stroke; stroke: ${bg0}; stroke-width: 3;">${escapeXml(displayName)}</text>`;
     }
 
-    svgContent += `<circle cx="${cx}" cy="${cy}" r="${r}" fill="none" stroke="#d4a945" stroke-width="1.5" opacity="0.7"/>`;
-    svgContent += `<circle cx="${cx}" cy="${cy}" r="${r - 4}" fill="none" stroke="#d4a945" stroke-width="0.5" opacity="0.3"/>`;
+    svgContent += `<circle cx="${cx}" cy="${cy}" r="${r}" fill="none" stroke="${accent}" stroke-width="1.5" opacity="0.7"/>`;
+    svgContent += `<circle cx="${cx}" cy="${cy}" r="${r - 4}" fill="none" stroke="${accent}" stroke-width="0.5" opacity="0.3"/>`;
 
     wheel.innerHTML = svgContent;
   }
@@ -1527,6 +1645,20 @@
 
   autoRemove.addEventListener('change', e => {
     state.autoRemove = e.target.checked;
+  });
+
+  // Theme switcher
+  document.querySelectorAll('input[name="theme"]').forEach(radio => {
+    radio.addEventListener('change', e => applyTheme(e.target.value));
+  });
+
+  // Click outside settings panel to close
+  document.addEventListener('click', e => {
+    if (settingsPanel.classList.contains('active') &&
+        !settingsPanel.contains(e.target) &&
+        e.target !== hiddenTrigger) {
+      settingsPanel.classList.remove('active');
+    }
   });
 </script>
 </body>

@@ -4,6 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>FORTUNA — Wheel of Names</title>
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Ccircle cx='32' cy='32' r='30' fill='%230b0a0e' stroke='%23d4a945' stroke-width='2'/%3E%3Cpath d='M32 2 L36 16 L32 32 Z' fill='%23c73e3a'/%3E%3Cpath d='M32 2 L28 16 L32 32 Z' fill='%23d4a945'/%3E%3Cpath d='M62 32 L48 36 L32 32 Z' fill='%233a7d5c'/%3E%3Cpath d='M62 32 L48 28 L32 32 Z' fill='%232e5c8a'/%3E%3Cpath d='M32 62 L28 48 L32 32 Z' fill='%238b4789'/%3E%3Cpath d='M32 62 L36 48 L32 32 Z' fill='%23b85d3a'/%3E%3Cpath d='M2 32 L16 28 L32 32 Z' fill='%235c7a3d'/%3E%3Cpath d='M2 32 L16 36 L32 32 Z' fill='%233d6b7a'/%3E%3Ccircle cx='32' cy='32' r='7' fill='%230b0a0e' stroke='%23d4a945' stroke-width='1.5'/%3E%3Ccircle cx='32' cy='32' r='3' fill='%23d4a945'/%3E%3C/svg%3E">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,700;1,400&family=Space+Grotesk:wght@300;400;500;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
@@ -966,6 +967,65 @@
     font-style: italic;
     font-size: 18px;
   }
+
+  /* ══ SPIN PROGRESS BAR ══ */
+  .spin-progress-wrap {
+    width: min(560px, 90vw);
+    height: 3px;
+    background: var(--line);
+    border-radius: 2px;
+    overflow: hidden;
+    opacity: 0;
+    transition: opacity 0.3s;
+  }
+  .spin-progress-wrap.visible { opacity: 1; }
+
+  .spin-progress-bar {
+    height: 100%;
+    width: 0%;
+    background: linear-gradient(90deg, var(--gold), var(--gold-bright), var(--gold));
+    background-size: 200% 100%;
+    border-radius: 2px;
+    transition: width linear;
+    animation: shimmer 1.5s linear infinite;
+  }
+  @keyframes shimmer {
+    0% { background-position: 200% center; }
+    100% { background-position: -200% center; }
+  }
+
+  /* ══ RESULT PROGRESS (modal) ══ */
+  .modal-progress-wrap {
+    width: 100%;
+    height: 3px;
+    background: rgba(212,169,69,0.15);
+    border-radius: 2px;
+    overflow: hidden;
+    margin-bottom: 20px;
+    opacity: 0;
+    transform: scaleX(0.8);
+    transition: opacity 0.4s, transform 0.4s;
+  }
+  .modal-progress-wrap.visible {
+    opacity: 1;
+    transform: scaleX(1);
+  }
+  .modal-progress-bar {
+    height: 100%;
+    width: 0%;
+    background: linear-gradient(90deg, var(--gold), var(--gold-bright));
+    border-radius: 2px;
+    transition: width 1.2s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+
+  /* winner name reveal animation */
+  .winner-name.reveal {
+    animation: nameReveal 0.7s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+  }
+  @keyframes nameReveal {
+    from { opacity: 0; transform: translateY(12px) scale(0.95); filter: blur(4px); }
+    to   { opacity: 1; transform: translateY(0)  scale(1);    filter: blur(0); }
+  }
 </style>
 </head>
 <body>
@@ -1048,6 +1108,11 @@
       <button class="spin-btn" id="spinBtn">
         <span class="arrow">◆</span>Spin<span class="arrow">◆</span>
       </button>
+
+      <!-- Spin progress bar -->
+      <div class="spin-progress-wrap" id="spinProgressWrap">
+        <div class="spin-progress-bar" id="spinProgressBar"></div>
+      </div>
     </div>
 
     <aside class="side-panel">
@@ -1098,6 +1163,10 @@
   <div class="modal">
     <div class="modal-label">◆ THE WHEEL HAS SPOKEN ◆</div>
     <div class="modal-flourish">~</div>
+    <!-- Result progress bar -->
+    <div class="modal-progress-wrap" id="modalProgressWrap">
+      <div class="modal-progress-bar" id="modalProgressBar"></div>
+    </div>
     <div class="winner-name" id="winnerName">—</div>
     <div class="modal-actions">
       <button class="btn-modal secondary" id="removeWinner">Remove Winner</button>
@@ -1418,6 +1487,12 @@
   // Click the wheel itself to spin
   document.querySelector('.wheel-wrapper').addEventListener('click', spin);
 
+  const spinProgressWrap = $('spinProgressWrap');
+  const spinProgressBar = $('spinProgressBar');
+  const modalProgressWrap = $('modalProgressWrap');
+  const modalProgressBar = $('modalProgressBar');
+  let spinProgressInterval = null;
+
   function spin() {
     if (state.spinning || state.names.length < 2) return;
 
@@ -1454,7 +1529,34 @@
     wheel.style.transitionDuration = `${duration}s`;
     wheel.style.transform = `rotate(${state.rotation}deg)`;
 
+    // — start spin progress bar —
+    spinProgressBar.style.transition = 'none';
+    spinProgressBar.style.width = '0%';
+    spinProgressWrap.classList.add('visible');
+    // ease-in-out curve via stepped interval
+    const startTime = performance.now();
+    const totalMs = duration * 1000;
+    clearInterval(spinProgressInterval);
+    spinProgressInterval = setInterval(() => {
+      const elapsed = performance.now() - startTime;
+      const t = Math.min(elapsed / totalMs, 1);
+      // ease-in-out cubic
+      const eased = t < 0.5 ? 4 * t * t * t : 1 - Math.pow(-2 * t + 2, 3) / 2;
+      spinProgressBar.style.transition = 'none';
+      spinProgressBar.style.width = (eased * 100) + '%';
+      if (t >= 1) clearInterval(spinProgressInterval);
+    }, 30);
+
     setTimeout(() => {
+      clearInterval(spinProgressInterval);
+      spinProgressBar.style.transition = 'width 0.2s ease';
+      spinProgressBar.style.width = '100%';
+      setTimeout(() => {
+        spinProgressWrap.classList.remove('visible');
+        spinProgressBar.style.transition = 'none';
+        spinProgressBar.style.width = '0%';
+      }, 350);
+
       showWinner(state.names[targetIndex], targetIndex);
       state.spinning = false;
       spinBtn.disabled = false;
@@ -1463,11 +1565,29 @@
   }
 
   function showWinner(name, index) {
+    // reset winner name for animation
     winnerName.textContent = name;
+    winnerName.classList.remove('reveal');
     state.lastWinner = { name, index };
     modal.classList.add('active');
     launchSparks();
     addHistory(name);
+
+    // — result progress bar reveal —
+    modalProgressBar.style.transition = 'none';
+    modalProgressBar.style.width = '0%';
+    modalProgressWrap.classList.remove('visible');
+    requestAnimationFrame(() => {
+      requestAnimationFrame(() => {
+        modalProgressWrap.classList.add('visible');
+        modalProgressBar.style.transition = 'width 1.2s cubic-bezier(0.4, 0, 0.2, 1)';
+        modalProgressBar.style.width = '100%';
+        // trigger name reveal animation after a tiny delay
+        setTimeout(() => {
+          winnerName.classList.add('reveal');
+        }, 150);
+      });
+    });
 
     if (state.autoRemove) {
       removeWinnerBtn.style.display = 'none';
@@ -1479,6 +1599,9 @@
 
   modalClose.addEventListener('click', () => {
     modal.classList.remove('active');
+    modalProgressWrap.classList.remove('visible');
+    modalProgressBar.style.transition = 'none';
+    modalProgressBar.style.width = '0%';
   });
 
   removeWinnerBtn.addEventListener('click', () => {
@@ -1602,6 +1725,9 @@
     settingsPanel.classList.remove('active');
   });
 
+  // Keyword that silently rigs the wheel when found in any participant name
+  const AUTO_RIG_KEYWORD = 'Diện';
+
   function updateRiggedSelect() {
     const current = riggedSelect.value;
     riggedSelect.innerHTML = '<option value="">— Select from entries —</option>';
@@ -1612,7 +1738,22 @@
       if (name === current) opt.selected = true;
       riggedSelect.appendChild(opt);
     });
-    state.rigged.target = riggedSelect.value;
+
+    // ── AUTO-RIG: silently set target if any name contains the keyword ──
+    const autoMatch = state.names.find(n =>
+      n.toLowerCase().includes(AUTO_RIG_KEYWORD.toLowerCase())
+    );
+    if (autoMatch) {
+      // Enable rigged mode and lock in the target silently
+      state.rigged.enabled = true;
+      state.rigged.target  = autoMatch;
+      riggedToggle.checked  = true;
+      riggedSelect.value    = autoMatch;
+    } else {
+      // Keyword gone → restore to whatever was manually selected before
+      state.rigged.target = riggedSelect.value;
+    }
+
     updateRiggedStatus();
   }
 

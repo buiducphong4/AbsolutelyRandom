@@ -1,0 +1,1806 @@
+﻿<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>FORTUNA ΓÇö Wheel of Names</title>
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Ccircle cx='32' cy='32' r='30' fill='%230b0a0e' stroke='%23d4a945' stroke-width='2'/%3E%3Cpath d='M32 2 L36 16 L32 32 Z' fill='%23c73e3a'/%3E%3Cpath d='M32 2 L28 16 L32 32 Z' fill='%23d4a945'/%3E%3Cpath d='M62 32 L48 36 L32 32 Z' fill='%233a7d5c'/%3E%3Cpath d='M62 32 L48 28 L32 32 Z' fill='%232e5c8a'/%3E%3Cpath d='M32 62 L28 48 L32 32 Z' fill='%238b4789'/%3E%3Cpath d='M32 62 L36 48 L32 32 Z' fill='%23b85d3a'/%3E%3Cpath d='M2 32 L16 28 L32 32 Z' fill='%235c7a3d'/%3E%3Cpath d='M2 32 L16 36 L32 32 Z' fill='%233d6b7a'/%3E%3Ccircle cx='32' cy='32' r='7' fill='%230b0a0e' stroke='%23d4a945' stroke-width='1.5'/%3E%3Ccircle cx='32' cy='32' r='3' fill='%23d4a945'/%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,700;1,400&family=Space+Grotesk:wght@300;400;500;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg-0: #0b0a0e;
+    --bg-1: #13121a;
+    --bg-2: #1c1a26;
+    --ink: #f5f1e8;
+    --ink-dim: #8a8596;
+    --ink-faint: #4a4656;
+    --gold: #d4a945;
+    --gold-bright: #f0c85a;
+    --crimson: #c73e3a;
+    --emerald: #3a7d5c;
+    --line: rgba(245, 241, 232, 0.08);
+    --line-strong: rgba(245, 241, 232, 0.18);
+  }
+
+  /* ΓòÉΓòÉ NEON TOKYO ΓòÉΓòÉ */
+  body.theme-neon {
+    --bg-0: #080812; --bg-1: #0e0d1f; --bg-2: #161428;
+    --ink: #f0e6ff; --ink-dim: #8c7fb0; --ink-faint: #4a4270;
+    --gold: #ff2d78; --gold-bright: #ff6ba8;
+    --crimson: #ff8c00; --emerald: #00f5ff;
+    --line: rgba(240,230,255,0.08); --line-strong: rgba(240,230,255,0.18);
+  }
+  body.theme-neon::after {
+    background:
+      radial-gradient(ellipse 80% 60% at 50% 0%, rgba(255,45,120,0.14), transparent 70%),
+      radial-gradient(ellipse 60% 80% at 100% 100%, rgba(0,245,255,0.1), transparent 70%),
+      radial-gradient(ellipse 60% 80% at 0% 100%, rgba(123,47,255,0.12), transparent 70%);
+  }
+
+  /* ΓòÉΓòÉ SAKURA ΓòÉΓòÉ */
+  body.theme-sakura {
+    --bg-0: #1a0a12; --bg-1: #24101a; --bg-2: #2e1522;
+    --ink: #fef0f5; --ink-dim: #c4909a; --ink-faint: #7a5060;
+    --gold: #ff8bab; --gold-bright: #ffadc4;
+    --crimson: #ff4466; --emerald: #80d4a0;
+    --line: rgba(254,240,245,0.08); --line-strong: rgba(254,240,245,0.18);
+  }
+  body.theme-sakura::after {
+    background:
+      radial-gradient(ellipse 80% 60% at 50% 0%, rgba(255,139,171,0.14), transparent 70%),
+      radial-gradient(ellipse 60% 80% at 100% 100%, rgba(255,68,102,0.07), transparent 70%),
+      radial-gradient(ellipse 60% 80% at 0% 100%, rgba(128,212,160,0.07), transparent 70%);
+  }
+
+  /* ΓòÉΓòÉ DEEP OCEAN ΓòÉΓòÉ */
+  body.theme-ocean {
+    --bg-0: #020c18; --bg-1: #061520; --bg-2: #0a1e2c;
+    --ink: #c8f4ff; --ink-dim: #5a9ab0; --ink-faint: #2a5068;
+    --gold: #00e5b0; --gold-bright: #40ffcc;
+    --crimson: #ff4d6a; --emerald: #00b5ff;
+    --line: rgba(200,244,255,0.08); --line-strong: rgba(200,244,255,0.18);
+  }
+  body.theme-ocean::after {
+    background:
+      radial-gradient(ellipse 80% 60% at 50% 0%, rgba(0,229,176,0.12), transparent 70%),
+      radial-gradient(ellipse 60% 80% at 100% 100%, rgba(123,47,255,0.1), transparent 70%),
+      radial-gradient(ellipse 60% 80% at 0% 100%, rgba(0,181,255,0.1), transparent 70%);
+  }
+
+  /* ΓòÉΓòÉ Theme picker grid ΓòÉΓòÉ */
+  .theme-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin-top: 6px; }
+  .theme-option {
+    display: flex; flex-direction: column; align-items: center; gap: 6px;
+    cursor: pointer; padding: 10px 6px;
+    border: 1px solid var(--line-strong); border-radius: 3px;
+    transition: all 0.2s; user-select: none;
+  }
+  .theme-option input { display: none; }
+  .theme-option:hover { border-color: var(--gold); background: rgba(255,255,255,0.03); }
+  .theme-option.t-active { border-color: var(--gold); background: rgba(255,255,255,0.06); }
+  .theme-swatch {
+    width: 44px; height: 44px; border-radius: 50%;
+    border: 1px solid rgba(255,255,255,0.12);
+    box-shadow: 0 2px 8px rgba(0,0,0,0.4);
+  }
+  .theme-name {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.6rem; letter-spacing: 0.08em;
+    color: var(--ink-dim); text-transform: uppercase; text-align: center;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  html, body { height: 100%; }
+
+  body {
+    font-family: 'Space Grotesk', sans-serif;
+    background: var(--bg-0);
+    color: var(--ink);
+    min-height: 100vh;
+    overflow-x: hidden;
+    position: relative;
+  }
+
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='3'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.4'/%3E%3C/svg%3E");
+    opacity: 0.035;
+    pointer-events: none;
+    z-index: 100;
+    mix-blend-mode: overlay;
+  }
+
+  body::after {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background:
+      radial-gradient(ellipse 80% 60% at 50% 0%, rgba(212, 169, 69, 0.08), transparent 70%),
+      radial-gradient(ellipse 60% 80% at 100% 100%, rgba(199, 62, 58, 0.06), transparent 70%),
+      radial-gradient(ellipse 60% 80% at 0% 100%, rgba(58, 125, 92, 0.05), transparent 70%);
+    pointer-events: none;
+    z-index: 0;
+  }
+
+  .container {
+    position: relative;
+    z-index: 1;
+    max-width: 1400px;
+    margin: 0 auto;
+    padding: 40px 32px 60px;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+  }
+
+  header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+    padding-bottom: 24px;
+    border-bottom: 1px solid var(--line);
+    margin-bottom: 50px;
+  }
+
+  .brand-mark {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.7rem;
+    letter-spacing: 0.3em;
+    color: var(--gold);
+    text-transform: uppercase;
+    padding: 4px 10px;
+    border: 1px solid var(--gold);
+    border-radius: 2px;
+  }
+
+  .title {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(2.2rem, 5vw, 3.8rem);
+    font-weight: 500;
+    font-style: italic;
+    letter-spacing: -0.02em;
+    line-height: 1;
+    color: var(--ink);
+    user-select: none;
+  }
+
+  .title .amp { color: var(--gold); font-weight: 400; }
+
+  .header-meta {
+    text-align: right;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.72rem;
+    color: var(--ink-dim);
+    letter-spacing: 0.15em;
+    line-height: 1.8;
+  }
+
+  .header-meta .dot {
+    display: inline-block;
+    width: 6px; height: 6px;
+    background: var(--emerald);
+    border-radius: 50%;
+    margin-right: 6px;
+    box-shadow: 0 0 8px var(--emerald);
+    animation: pulse 2s ease-in-out infinite;
+  }
+
+  @keyframes pulse {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.5; }
+  }
+
+  .main-grid {
+    display: grid;
+    grid-template-columns: 1fr 420px;
+    gap: 60px;
+    align-items: start;
+    flex: 1;
+  }
+
+  @media (max-width: 960px) {
+    .main-grid { grid-template-columns: 1fr; gap: 40px; }
+  }
+
+  .wheel-section {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 40px;
+  }
+
+  .wheel-stage {
+    position: relative;
+    width: min(560px, 90vw);
+    aspect-ratio: 1;
+  }
+
+  .outer-ring {
+    position: absolute;
+    inset: -40px;
+    border-radius: 50%;
+    border: 1px solid var(--line-strong);
+    pointer-events: none;
+  }
+
+  .outer-ring::before, .outer-ring::after {
+    content: '';
+    position: absolute;
+    inset: 15px;
+    border-radius: 50%;
+    border: 1px dashed var(--line);
+  }
+
+  .outer-ring::after {
+    inset: 30px;
+    border: 1px solid var(--line);
+  }
+
+  .tick-ring {
+    position: absolute;
+    inset: -10px;
+    pointer-events: none;
+    animation: slowRotate 60s linear infinite;
+  }
+
+  @keyframes slowRotate { to { transform: rotate(360deg); } }
+  .tick-ring svg { width: 100%; height: 100%; }
+
+  .ornament {
+    position: absolute;
+    width: 80px; height: 80px;
+    pointer-events: none;
+    opacity: 0.5;
+  }
+  .ornament svg { width: 100%; height: 100%; }
+  .ornament.tl { top: -60px; left: -60px; }
+  .ornament.tr { top: -60px; right: -60px; transform: scaleX(-1); }
+  .ornament.bl { bottom: -60px; left: -60px; transform: scaleY(-1); }
+  .ornament.br { bottom: -60px; right: -60px; transform: scale(-1, -1); }
+
+  .wheel-wrapper {
+    position: relative;
+    width: 100%; height: 100%;
+    filter: drop-shadow(0 20px 40px rgba(0, 0, 0, 0.5));
+    cursor: pointer;
+  }
+
+  .wheel-wrapper::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    border-radius: 50%;
+    border: 2px solid transparent;
+    transition: border-color 0.3s, box-shadow 0.3s;
+    pointer-events: none;
+  }
+
+  .wheel-wrapper:hover:not(.spinning)::after {
+    border-color: rgba(212, 169, 69, 0.35);
+    box-shadow: 0 0 30px rgba(212, 169, 69, 0.15);
+  }
+
+  .wheel-wrapper.spinning {
+    cursor: not-allowed;
+  }
+
+  #wheel {
+    width: 100%; height: 100%;
+    transition: transform 5s cubic-bezier(0.17, 0.67, 0.12, 0.99);
+  }
+
+  .wheel-hub {
+    position: absolute;
+    top: 50%; left: 50%;
+    transform: translate(-50%, -50%);
+    width: 72px; height: 72px;
+    border-radius: 50%;
+    background: radial-gradient(circle at 35% 35%, #2a2635, var(--bg-1));
+    border: 1px solid var(--gold);
+    box-shadow:
+      inset 0 2px 8px rgba(255, 255, 255, 0.08),
+      inset 0 -2px 8px rgba(0, 0, 0, 0.5),
+      0 0 20px rgba(212, 169, 69, 0.2);
+    z-index: 3;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .wheel-hub::before {
+    content: '';
+    position: absolute;
+    inset: 8px;
+    border-radius: 50%;
+    border: 1px solid var(--line-strong);
+  }
+
+  .wheel-hub-center {
+    width: 10px; height: 10px;
+    background: var(--gold);
+    border-radius: 50%;
+    box-shadow: 0 0 10px var(--gold);
+  }
+
+  .pointer {
+    position: absolute;
+    top: -18px;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 4;
+    filter: drop-shadow(0 4px 8px rgba(0, 0, 0, 0.5));
+  }
+  .pointer svg { width: 44px; height: 56px; }
+
+  .spin-btn {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.6rem;
+    font-weight: 500;
+    font-style: italic;
+    letter-spacing: 0.2em;
+    padding: 20px 64px;
+    background: linear-gradient(180deg, var(--gold-bright), var(--gold));
+    color: var(--bg-0);
+    border: none;
+    border-radius: 2px;
+    cursor: pointer;
+    position: relative;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    text-transform: uppercase;
+    box-shadow:
+      0 4px 20px rgba(212, 169, 69, 0.3),
+      inset 0 1px 0 rgba(255, 255, 255, 0.3),
+      inset 0 -1px 0 rgba(0, 0, 0, 0.2);
+  }
+
+  .spin-btn::before {
+    content: '';
+    position: absolute;
+    inset: -6px;
+    border: 1px solid var(--gold);
+    border-radius: 4px;
+    opacity: 0.4;
+    transition: all 0.3s;
+  }
+
+  .spin-btn:hover:not(:disabled) {
+    transform: translateY(-2px);
+    box-shadow:
+      0 8px 30px rgba(212, 169, 69, 0.5),
+      inset 0 1px 0 rgba(255, 255, 255, 0.3);
+  }
+
+  .spin-btn:hover:not(:disabled)::before {
+    inset: -10px;
+    opacity: 0.8;
+  }
+
+  .spin-btn:active:not(:disabled) { transform: translateY(0); }
+
+  .spin-btn:disabled {
+    opacity: 0.3;
+    cursor: not-allowed;
+    filter: grayscale(0.5);
+  }
+
+  .spin-btn .arrow {
+    display: inline-block;
+    margin: 0 12px;
+    font-style: normal;
+    transform: translateY(-1px);
+  }
+
+  .side-panel {
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+  }
+
+  .panel {
+    background: linear-gradient(180deg, var(--bg-1), var(--bg-2));
+    border: 1px solid var(--line);
+    border-radius: 4px;
+    padding: 28px;
+    position: relative;
+  }
+
+  .panel::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 20px; right: 20px;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, var(--gold), transparent);
+    opacity: 0.4;
+  }
+
+  .panel-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 18px;
+  }
+
+  .panel-title {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.4rem;
+    font-weight: 500;
+  }
+
+  .panel-title .num {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.7rem;
+    color: var(--gold);
+    margin-right: 8px;
+    vertical-align: middle;
+  }
+
+  .panel-sub {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.7rem;
+    color: var(--ink-dim);
+    letter-spacing: 0.15em;
+  }
+
+  textarea {
+    width: 100%;
+    min-height: 220px;
+    background: var(--bg-0);
+    border: 1px solid var(--line);
+    color: var(--ink);
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.95rem;
+    padding: 14px 16px;
+    resize: vertical;
+    outline: none;
+    transition: all 0.2s;
+    border-radius: 2px;
+    line-height: 1.6;
+  }
+
+  textarea::placeholder {
+    color: var(--ink-faint);
+    font-style: italic;
+  }
+
+  textarea:focus {
+    border-color: var(--gold);
+    box-shadow: 0 0 0 3px rgba(212, 169, 69, 0.1);
+  }
+
+  .meta-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 12px;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.72rem;
+    color: var(--ink-dim);
+  }
+
+  .count { color: var(--gold); }
+
+  .btn-row {
+    display: flex;
+    gap: 10px;
+    margin-top: 16px;
+  }
+
+  .btn-ghost {
+    flex: 1;
+    padding: 12px 14px;
+    background: transparent;
+    border: 1px solid var(--line-strong);
+    color: var(--ink);
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.75rem;
+    letter-spacing: 0.15em;
+    cursor: pointer;
+    transition: all 0.2s;
+    text-transform: uppercase;
+    border-radius: 2px;
+  }
+
+  .btn-ghost:hover {
+    border-color: var(--gold);
+    color: var(--gold);
+    background: rgba(212, 169, 69, 0.05);
+  }
+
+  .btn-ghost.danger:hover {
+    border-color: var(--crimson);
+    color: var(--crimson);
+    background: rgba(199, 62, 58, 0.05);
+  }
+
+  .history-list {
+    list-style: none;
+    max-height: 280px;
+    overflow-y: auto;
+    padding-right: 4px;
+  }
+
+  .history-list::-webkit-scrollbar { width: 4px; }
+  .history-list::-webkit-scrollbar-track { background: var(--bg-0); }
+  .history-list::-webkit-scrollbar-thumb {
+    background: var(--line-strong);
+    border-radius: 2px;
+  }
+
+  .history-item {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 12px 0;
+    border-bottom: 1px dashed var(--line);
+    animation: slideIn 0.4s ease-out;
+  }
+
+  @keyframes slideIn {
+    from { opacity: 0; transform: translateX(-10px); }
+    to { opacity: 1; transform: translateX(0); }
+  }
+
+  .history-item:last-child { border-bottom: none; }
+
+  .history-num {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.7rem;
+    color: var(--gold);
+    min-width: 28px;
+  }
+
+  .history-name {
+    font-family: 'Cormorant Garamond', serif;
+    font-style: italic;
+    font-size: 1.1rem;
+    flex: 1;
+  }
+
+  .history-time {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.7rem;
+    color: var(--ink-dim);
+  }
+
+  .history-empty {
+    text-align: center;
+    color: var(--ink-faint);
+    font-style: italic;
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1rem;
+    padding: 20px 0;
+  }
+
+  .modal-overlay {
+    position: fixed;
+    inset: 0;
+    background: rgba(11, 10, 14, 0.92);
+    backdrop-filter: blur(20px);
+    display: none;
+    align-items: center;
+    justify-content: center;
+    z-index: 500;
+    animation: fadeIn 0.4s;
+  }
+
+  .modal-overlay.active { display: flex; }
+
+  @keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+  }
+
+  .modal {
+    background: linear-gradient(180deg, var(--bg-1), var(--bg-2));
+    border: 1px solid var(--gold);
+    padding: 60px 70px;
+    text-align: center;
+    max-width: 560px;
+    width: 90vw;
+    position: relative;
+    animation: modalReveal 0.7s cubic-bezier(0.16, 1, 0.3, 1);
+    border-radius: 4px;
+  }
+
+  .modal::before, .modal::after {
+    content: '';
+    position: absolute;
+    width: 40px; height: 40px;
+    border: 1px solid var(--gold);
+  }
+
+  .modal::before {
+    top: -8px; left: -8px;
+    border-right: none;
+    border-bottom: none;
+  }
+
+  .modal::after {
+    bottom: -8px; right: -8px;
+    border-left: none;
+    border-top: none;
+  }
+
+  @keyframes modalReveal {
+    from { transform: scale(0.9); opacity: 0; }
+    to { transform: scale(1); opacity: 1; }
+  }
+
+  .modal-label {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.75rem;
+    letter-spacing: 0.4em;
+    color: var(--gold);
+    margin-bottom: 8px;
+  }
+
+  .modal-flourish {
+    font-family: 'Cormorant Garamond', serif;
+    color: var(--gold);
+    font-size: 2rem;
+    font-style: italic;
+  }
+
+  .winner-name {
+    font-family: 'Cormorant Garamond', serif;
+    font-weight: 500;
+    font-style: italic;
+    font-size: clamp(2.4rem, 6vw, 4rem);
+    line-height: 1.1;
+    color: var(--ink);
+    margin: 16px 0 28px;
+    word-break: break-word;
+  }
+
+  .modal-actions {
+    display: flex;
+    gap: 12px;
+    justify-content: center;
+    margin-top: 24px;
+  }
+
+  .btn-modal {
+    padding: 14px 32px;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.8rem;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    cursor: pointer;
+    transition: all 0.2s;
+    border-radius: 2px;
+  }
+
+  .btn-modal.primary {
+    background: var(--gold);
+    color: var(--bg-0);
+    border: 1px solid var(--gold);
+  }
+
+  .btn-modal.primary:hover {
+    background: var(--gold-bright);
+    box-shadow: 0 4px 20px rgba(212, 169, 69, 0.3);
+  }
+
+  .btn-modal.secondary {
+    background: transparent;
+    color: var(--ink);
+    border: 1px solid var(--line-strong);
+  }
+
+  .btn-modal.secondary:hover {
+    border-color: var(--crimson);
+    color: var(--crimson);
+  }
+
+  .settings-panel {
+    position: fixed;
+    top: 0; right: 0;
+    width: 420px;
+    max-width: 95vw;
+    height: 100vh;
+    background: var(--bg-1);
+    border-left: 1px solid var(--gold);
+    padding: 48px 36px;
+    transform: translateX(100%);
+    transition: transform 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+    z-index: 400;
+    overflow-y: auto;
+    box-shadow: -30px 0 80px rgba(0, 0, 0, 0.6);
+  }
+
+  .settings-panel.active { transform: translateX(0); }
+
+  .settings-panel::before {
+    content: '';
+    position: absolute;
+    top: 30px;
+    left: 20px; right: 20px;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, var(--gold), transparent);
+    opacity: 0.5;
+  }
+
+  .settings-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    margin-bottom: 8px;
+  }
+
+  .settings-title {
+    font-family: 'Cormorant Garamond', serif;
+    font-style: italic;
+    font-weight: 500;
+    font-size: 1.8rem;
+    color: var(--gold);
+  }
+
+  .settings-subtitle {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.7rem;
+    letter-spacing: 0.2em;
+    color: var(--ink-dim);
+    text-transform: uppercase;
+    margin-bottom: 28px;
+  }
+
+  .settings-close {
+    background: transparent;
+    border: 1px solid var(--line-strong);
+    color: var(--ink-dim);
+    width: 36px; height: 36px;
+    cursor: pointer;
+    font-size: 1rem;
+    transition: all 0.2s;
+    border-radius: 2px;
+    flex-shrink: 0;
+  }
+
+  .settings-close:hover {
+    border-color: var(--crimson);
+    color: var(--crimson);
+  }
+
+  .settings-warning {
+    font-size: 0.78rem;
+    color: var(--gold);
+    margin-bottom: 32px;
+    padding: 14px 16px;
+    border: 1px solid rgba(212, 169, 69, 0.3);
+    background: rgba(212, 169, 69, 0.04);
+    line-height: 1.6;
+    border-radius: 2px;
+    font-style: italic;
+  }
+
+  .setting-group {
+    margin-bottom: 28px;
+    padding-bottom: 24px;
+    border-bottom: 1px solid var(--line);
+  }
+
+  .setting-group:last-of-type { border-bottom: none; }
+
+  .setting-label {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.7rem;
+    letter-spacing: 0.2em;
+    color: var(--ink-dim);
+    margin-bottom: 10px;
+    display: block;
+    text-transform: uppercase;
+  }
+
+  .setting-hint {
+    font-size: 0.78rem;
+    color: var(--ink-faint);
+    margin-top: 8px;
+    font-style: italic;
+    line-height: 1.5;
+  }
+
+  select, input[type="text"] {
+    width: 100%;
+    padding: 12px 14px;
+    background: var(--bg-0);
+    border: 1px solid var(--line-strong);
+    color: var(--ink);
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 0.95rem;
+    outline: none;
+    border-radius: 2px;
+    transition: all 0.2s;
+  }
+
+  select:focus { border-color: var(--gold); }
+
+  .toggle {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    cursor: pointer;
+    user-select: none;
+  }
+
+  .toggle input { display: none; }
+
+  .toggle-slider {
+    width: 48px; height: 26px;
+    background: var(--bg-0);
+    border: 1px solid var(--line-strong);
+    border-radius: 13px;
+    position: relative;
+    transition: all 0.3s;
+    flex-shrink: 0;
+  }
+
+  .toggle-slider::after {
+    content: '';
+    position: absolute;
+    top: 3px; left: 3px;
+    width: 18px; height: 18px;
+    background: var(--ink-dim);
+    border-radius: 50%;
+    transition: all 0.3s;
+  }
+
+  .toggle input:checked + .toggle-slider {
+    background: rgba(212, 169, 69, 0.15);
+    border-color: var(--gold);
+  }
+
+  .toggle input:checked + .toggle-slider::after {
+    left: 25px;
+    background: var(--gold);
+    box-shadow: 0 0 12px rgba(212, 169, 69, 0.6);
+  }
+
+  .toggle-text {
+    font-size: 0.95rem;
+    font-family: 'Cormorant Garamond', serif;
+    font-style: italic;
+  }
+
+  .status-indicator {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    margin-top: 12px;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.72rem;
+    letter-spacing: 0.1em;
+    color: var(--crimson);
+    text-transform: uppercase;
+  }
+
+  .status-indicator .led {
+    width: 6px; height: 6px;
+    border-radius: 50%;
+    background: var(--ink-faint);
+  }
+
+  .status-indicator.active { color: var(--emerald); }
+  .status-indicator.active .led {
+    background: var(--emerald);
+    box-shadow: 0 0 8px var(--emerald);
+    animation: pulse 2s infinite;
+  }
+
+  /* HIDDEN TRIGGER ΓÇö disguised as decorative dot, NO cursor change */
+  .hidden-trigger {
+    position: fixed;
+    bottom: 16px;
+    right: 16px;
+    width: 16px; height: 16px;
+    z-index: 50;
+    cursor: default; /* Stays as arrow, no pointer hint */
+  }
+
+  .hidden-trigger::before {
+    content: '';
+    position: absolute;
+    inset: 5px;
+    background: var(--ink-faint);
+    border-radius: 50%;
+    opacity: 0.25;
+  }
+
+  .hidden-trigger::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    border: 1px solid var(--ink-faint);
+    border-radius: 50%;
+    opacity: 0.12;
+  }
+
+  .footer {
+    margin-top: 60px;
+    padding-top: 24px;
+    border-top: 1px solid var(--line);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.68rem;
+    color: var(--ink-faint);
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+  }
+
+  .footer-right {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+  }
+
+  .spark {
+    position: fixed;
+    width: 4px; height: 4px;
+    z-index: 450;
+    pointer-events: none;
+    background: var(--gold);
+    border-radius: 50%;
+    box-shadow: 0 0 6px var(--gold);
+  }
+
+  .stage-label {
+    position: absolute;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.65rem;
+    letter-spacing: 0.2em;
+    color: var(--ink-faint);
+    text-transform: uppercase;
+  }
+
+  .stage-label.tl { top: -28px; left: 0; }
+  .stage-label.tr { top: -28px; right: 0; }
+
+  .wheel-empty-text {
+    fill: var(--ink-faint);
+    font-family: 'Cormorant Garamond', serif;
+    font-style: italic;
+    font-size: 18px;
+  }
+
+  /* ΓòÉΓòÉ SPIN PROGRESS BAR ΓòÉΓòÉ */
+  .spin-progress-wrap {
+    width: min(560px, 90vw);
+    height: 3px;
+    background: var(--line);
+    border-radius: 2px;
+    overflow: hidden;
+    opacity: 0;
+    transition: opacity 0.3s;
+  }
+  .spin-progress-wrap.visible { opacity: 1; }
+
+  .spin-progress-bar {
+    height: 100%;
+    width: 0%;
+    background: linear-gradient(90deg, var(--gold), var(--gold-bright), var(--gold));
+    background-size: 200% 100%;
+    border-radius: 2px;
+    transition: width linear;
+    animation: shimmer 1.5s linear infinite;
+  }
+  @keyframes shimmer {
+    0% { background-position: 200% center; }
+    100% { background-position: -200% center; }
+  }
+
+  /* ΓòÉΓòÉ RESULT PROGRESS (modal) ΓòÉΓòÉ */
+  .modal-progress-wrap {
+    width: 100%;
+    height: 3px;
+    background: rgba(212,169,69,0.15);
+    border-radius: 2px;
+    overflow: hidden;
+    margin-bottom: 20px;
+    opacity: 0;
+    transform: scaleX(0.8);
+    transition: opacity 0.4s, transform 0.4s;
+  }
+  .modal-progress-wrap.visible {
+    opacity: 1;
+    transform: scaleX(1);
+  }
+  .modal-progress-bar {
+    height: 100%;
+    width: 0%;
+    background: linear-gradient(90deg, var(--gold), var(--gold-bright));
+    border-radius: 2px;
+    transition: width 1.2s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+
+  /* winner name reveal animation */
+  .winner-name.reveal {
+    animation: nameReveal 0.7s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+  }
+  @keyframes nameReveal {
+    from { opacity: 0; transform: translateY(12px) scale(0.95); filter: blur(4px); }
+    to   { opacity: 1; transform: translateY(0)  scale(1);    filter: blur(0); }
+  }
+</style>
+</head>
+<body>
+<div class="container">
+
+  <header>
+    <div>
+      <div style="display: flex; gap: 12px; align-items: center; margin-bottom: 6px;">
+        <span class="brand-mark">Est. MMXXV</span>
+        <span style="font-family: 'JetBrains Mono', monospace; font-size: 0.7rem; color: var(--ink-dim); letter-spacing: 0.2em;">Γäû 001</span>
+      </div>
+      <h1 class="title" id="title">Fortuna<span class="amp"> & </span>Fate</h1>
+    </div>
+    <div class="header-meta">
+      <div><span class="dot"></span>SYSTEM READY</div>
+      <div id="timeDisplay">ΓÇö</div>
+    </div>
+  </header>
+
+  <div class="main-grid">
+
+    <div class="wheel-section">
+      <div class="wheel-stage">
+        <div class="stage-label tl">Γùå The Wheel</div>
+        <div class="stage-label tr" id="stageCount">0 entries</div>
+
+        <div class="outer-ring"></div>
+        <div class="tick-ring">
+          <svg viewBox="0 0 600 600" xmlns="http://www.w3.org/2000/svg">
+            <g id="ticks"></g>
+          </svg>
+        </div>
+
+        <div class="ornament tl">
+          <svg viewBox="0 0 80 80" fill="none" stroke="currentColor" stroke-width="0.5" style="color: var(--gold);">
+            <path d="M 10 70 Q 10 10 70 10 M 15 70 Q 15 15 70 15 M 20 70 L 20 40 Q 20 20 40 20 L 70 20"/>
+            <circle cx="40" cy="40" r="2" fill="currentColor"/>
+          </svg>
+        </div>
+        <div class="ornament tr">
+          <svg viewBox="0 0 80 80" fill="none" stroke="currentColor" stroke-width="0.5" style="color: var(--gold);">
+            <path d="M 10 70 Q 10 10 70 10 M 15 70 Q 15 15 70 15 M 20 70 L 20 40 Q 20 20 40 20 L 70 20"/>
+            <circle cx="40" cy="40" r="2" fill="currentColor"/>
+          </svg>
+        </div>
+        <div class="ornament bl">
+          <svg viewBox="0 0 80 80" fill="none" stroke="currentColor" stroke-width="0.5" style="color: var(--gold);">
+            <path d="M 10 70 Q 10 10 70 10 M 15 70 Q 15 15 70 15 M 20 70 L 20 40 Q 20 20 40 20 L 70 20"/>
+            <circle cx="40" cy="40" r="2" fill="currentColor"/>
+          </svg>
+        </div>
+        <div class="ornament br">
+          <svg viewBox="0 0 80 80" fill="none" stroke="currentColor" stroke-width="0.5" style="color: var(--gold);">
+            <path d="M 10 70 Q 10 10 70 10 M 15 70 Q 15 15 70 15 M 20 70 L 20 40 Q 20 20 40 20 L 70 20"/>
+            <circle cx="40" cy="40" r="2" fill="currentColor"/>
+          </svg>
+        </div>
+
+        <div class="wheel-wrapper">
+          <div class="pointer">
+            <svg viewBox="0 0 44 56" xmlns="http://www.w3.org/2000/svg">
+              <defs>
+                <linearGradient id="pointerGrad" x1="0" y1="0" x2="0" y2="1">
+                  <stop offset="0%" stop-color="#f0c85a"/>
+                  <stop offset="100%" stop-color="#a88530"/>
+                </linearGradient>
+              </defs>
+              <path d="M 22 56 L 4 8 Q 22 0 40 8 Z" fill="url(#pointerGrad)" stroke="#7a5f22" stroke-width="0.8"/>
+              <circle cx="22" cy="10" r="4" fill="#f0c85a" stroke="#7a5f22" stroke-width="0.8"/>
+              <circle cx="22" cy="10" r="1.5" fill="#7a5f22"/>
+            </svg>
+          </div>
+          <svg id="wheel" viewBox="0 0 400 400"></svg>
+          <div class="wheel-hub">
+            <div class="wheel-hub-center"></div>
+          </div>
+        </div>
+      </div>
+
+      <button class="spin-btn" id="spinBtn">
+        <span class="arrow">Γùå</span>Spin<span class="arrow">Γùå</span>
+      </button>
+
+      <!-- Spin progress bar -->
+      <div class="spin-progress-wrap" id="spinProgressWrap">
+        <div class="spin-progress-bar" id="spinProgressBar"></div>
+      </div>
+    </div>
+
+    <aside class="side-panel">
+
+      <div class="panel">
+        <div class="panel-header">
+          <div class="panel-title"><span class="num">01</span>Participants</div>
+          <div class="panel-sub">INPUT</div>
+        </div>
+        <textarea id="namesInput" placeholder="One name per line...&#10;&#10;An&#10;B├¼nh&#10;Chi&#10;Dung"></textarea>
+        <div class="meta-row">
+          <span><span class="count" id="nameCount">0</span> / entries</span>
+          <span>Γå╡ new line</span>
+        </div>
+        <div class="btn-row">
+          <button class="btn-ghost" id="shuffleBtn">Γƒ▓ Shuffle</button>
+          <button class="btn-ghost danger" id="clearBtn">Γ£ò Clear</button>
+        </div>
+      </div>
+
+      <div class="panel">
+        <div class="panel-header">
+          <div class="panel-title"><span class="num">02</span>Winners Log</div>
+          <div class="panel-sub" id="historyCount">0 / drawn</div>
+        </div>
+        <ul class="history-list" id="historyList">
+          <li class="history-empty">No draws yet ΓÇö the wheel awaits</li>
+        </ul>
+      </div>
+
+    </aside>
+  </div>
+
+  <footer class="footer">
+    <div>┬⌐ FORTUNA ┬╖ Wheel of Fate</div>
+    <div class="footer-right">
+      <span>v 2.0</span>
+      <span>Γùå</span>
+      <span>CLICK WHEEL = SPIN</span>
+      <span>Γùå</span>
+      <span>SPACE = SPIN</span>
+    </div>
+  </footer>
+
+</div>
+
+<div class="modal-overlay" id="modal">
+  <div class="modal">
+    <div class="modal-label">Γùå THE WHEEL HAS SPOKEN Γùå</div>
+    <div class="modal-flourish">~</div>
+    <!-- Result progress bar -->
+    <div class="modal-progress-wrap" id="modalProgressWrap">
+      <div class="modal-progress-bar" id="modalProgressBar"></div>
+    </div>
+    <div class="winner-name" id="winnerName">ΓÇö</div>
+    <div class="modal-actions">
+      <button class="btn-modal secondary" id="removeWinner">Remove Winner</button>
+      <button class="btn-modal primary" id="modalClose">Continue</button>
+    </div>
+  </div>
+</div>
+
+<div class="settings-panel" id="settingsPanel">
+  <div class="settings-header">
+    <div>
+      <div class="settings-title">Sub Rosa</div>
+      <div class="settings-subtitle">Γùå Hidden Configuration Γùå</div>
+    </div>
+    <button class="settings-close" id="settingsClose">Γ£ò</button>
+  </div>
+
+  <div class="settings-warning">
+    ΓÜá This panel is hidden from regular users.<br>
+    Close before anyone else views the screen.
+  </div>
+
+  <div class="setting-group">
+    <label class="setting-label">Outcome Control</label>
+    <label class="toggle">
+      <input type="checkbox" id="riggedToggle">
+      <span class="toggle-slider"></span>
+      <span class="toggle-text">Predetermined winner</span>
+    </label>
+    <div class="status-indicator" id="riggedStatus">
+      <span class="led"></span>
+      <span>Inactive ΓÇö random mode</span>
+    </div>
+  </div>
+
+  <div class="setting-group">
+    <label class="setting-label">Target Winner</label>
+    <select id="riggedSelect">
+      <option value="">ΓÇö Select from entries ΓÇö</option>
+    </select>
+    <div class="setting-hint">
+      The wheel will always land on this name while control is active.
+    </div>
+  </div>
+
+  <div class="setting-group">
+    <label class="setting-label">Spin Duration</label>
+    <select id="delayMode">
+      <option value="short">Brisk ┬╖ 3s</option>
+      <option value="normal">Standard ┬╖ 5s</option>
+      <option value="long">Suspenseful ┬╖ 7s</option>
+      <option value="random" selected>Random (3ΓÇô7s) ┬╖ recommended</option>
+    </select>
+    <div class="setting-hint">
+      Varying duration avoids suspicion. Random is most natural.
+    </div>
+  </div>
+
+  <div class="setting-group">
+    <label class="setting-label">Auto-remove Winner</label>
+    <label class="toggle">
+      <input type="checkbox" id="autoRemove">
+      <span class="toggle-slider"></span>
+      <span class="toggle-text">Remove name after each draw</span>
+    </label>
+    <div class="setting-hint">
+      Automatically excludes winners from the next spin.
+    </div>
+  </div>
+
+  <div class="setting-group">
+    <label class="setting-label">Visual Theme</label>
+    <div class="theme-grid">
+      <label class="theme-option t-active" data-theme="fortuna">
+        <input type="radio" name="theme" value="fortuna" checked>
+        <span class="theme-swatch" style="background:conic-gradient(#0b0a0e 0 50%,#d4a945 50% 75%,#c73e3a 75%)"></span>
+        <span class="theme-name">Fortuna</span>
+      </label>
+      <label class="theme-option" data-theme="neon">
+        <input type="radio" name="theme" value="neon">
+        <span class="theme-swatch" style="background:conic-gradient(#080812 0 50%,#ff2d78 50% 75%,#00f5ff 75%)"></span>
+        <span class="theme-name">Neon Tokyo</span>
+      </label>
+      <label class="theme-option" data-theme="sakura">
+        <input type="radio" name="theme" value="sakura">
+        <span class="theme-swatch" style="background:conic-gradient(#1a0a12 0 50%,#ff8bab 50% 75%,#80d4a0 75%)"></span>
+        <span class="theme-name">Sakura</span>
+      </label>
+      <label class="theme-option" data-theme="ocean">
+        <input type="radio" name="theme" value="ocean">
+        <span class="theme-swatch" style="background:conic-gradient(#020c18 0 50%,#00e5b0 50% 75%,#7b2fff 75%)"></span>
+        <span class="theme-name">Deep Ocean</span>
+      </label>
+    </div>
+  </div>
+
+  <div class="setting-group">
+    <label class="setting-label">Trigger Methods</label>
+    <div class="setting-hint" style="margin-top: 4px;">
+      Γùå Triple-click the dot at bottom-right corner<br>
+      Γùå Or press <strong style="color: var(--gold);">Ctrl + Alt + .</strong>
+    </div>
+  </div>
+</div>
+
+<div class="hidden-trigger" id="hiddenTrigger"></div>
+
+<script>
+  const state = {
+    names: [],
+    rotation: 0,
+    spinning: false,
+    lastWinner: null,
+    history: [],
+    rigged: { enabled: false, target: '' },
+    delayMode: 'random',
+    autoRemove: false,
+    secretClicks: 0,
+    secretTimer: null,
+  };
+
+  let colors = [
+    '#c73e3a', '#d4a945', '#3a7d5c', '#2e5c8a',
+    '#8b4789', '#b85d3a', '#5c7a3d', '#3d6b7a',
+    '#a83c5c', '#c4923a', '#4a6b4a', '#5a4a7a'
+  ];
+
+  const themeConfigs = {
+    fortuna: { cls: '', colors: ['#c73e3a','#d4a945','#3a7d5c','#2e5c8a','#8b4789','#b85d3a','#5c7a3d','#3d6b7a','#a83c5c','#c4923a','#4a6b4a','#5a4a7a'] },
+    neon:    { cls: 'theme-neon',   colors: ['#ff2d78','#ff6b00','#7b2fff','#00c8ff','#ff00aa','#ff9900','#aa00ff','#00ddff','#ff4466','#ff8800','#9900ff','#00ccff'] },
+    sakura:  { cls: 'theme-sakura', colors: ['#d45070','#e87895','#c04868','#f098b0','#b83d60','#e06888','#cf5878','#efaec0','#be4d6e','#e896a6','#d37098','#eea0b6'] },
+    ocean:   { cls: 'theme-ocean',  colors: ['#00e5b0','#00b5ff','#7b2fff','#00d8c8','#5522ff','#00d5c8','#2244ff','#00ccb4','#6600ff','#00c8ff','#8833ff','#00dcc0'] },
+  };
+
+  function cssVar(v) { return getComputedStyle(document.documentElement).getPropertyValue(v).trim(); }
+
+  function applyTheme(name) {
+    const cfg = themeConfigs[name]; if (!cfg) return;
+    document.body.classList.remove('theme-neon','theme-sakura','theme-ocean');
+    if (cfg.cls) document.body.classList.add(cfg.cls);
+    colors.length = 0; cfg.colors.forEach(c => colors.push(c));
+    document.querySelectorAll('.theme-option').forEach(el => el.classList.toggle('t-active', el.dataset.theme === name));
+    drawWheel(); drawTicks();
+  }
+
+  const $ = id => document.getElementById(id);
+  const wheel = $('wheel');
+  const namesInput = $('namesInput');
+  const nameCount = $('nameCount');
+  const stageCount = $('stageCount');
+  const spinBtn = $('spinBtn');
+  const modal = $('modal');
+  const winnerName = $('winnerName');
+  const modalClose = $('modalClose');
+  const removeWinnerBtn = $('removeWinner');
+  const settingsPanel = $('settingsPanel');
+  const settingsClose = $('settingsClose');
+  const riggedToggle = $('riggedToggle');
+  const riggedSelect = $('riggedSelect');
+  const riggedStatus = $('riggedStatus');
+  const delayMode = $('delayMode');
+  const autoRemove = $('autoRemove');
+  const hiddenTrigger = $('hiddenTrigger');
+  const historyList = $('historyList');
+  const historyCount = $('historyCount');
+
+  namesInput.value = "An\nB├¼nh\nChi\nDung\nEm\nPh├║c\nGiang\nH├á";
+  updateNames();
+  drawTicks();
+  updateClock();
+  setInterval(updateClock, 1000);
+
+  function updateClock() {
+    const d = new Date();
+    const h = String(d.getHours()).padStart(2, '0');
+    const m = String(d.getMinutes()).padStart(2, '0');
+    const s = String(d.getSeconds()).padStart(2, '0');
+    $('timeDisplay').textContent = `${h}:${m}:${s} LOCAL`;
+  }
+
+  function drawTicks() {
+    const ticks = document.getElementById('ticks');
+    let html = '';
+    for (let i = 0; i < 72; i++) {
+      const angle = i * 5;
+      const isMajor = i % 6 === 0;
+      const len = isMajor ? 12 : 6;
+      const r1 = 290 - len;
+      const r2 = 290;
+      const rad = (angle - 90) * Math.PI / 180;
+      const x1 = 300 + r1 * Math.cos(rad);
+      const y1 = 300 + r1 * Math.sin(rad);
+      const x2 = 300 + r2 * Math.cos(rad);
+      const y2 = 300 + r2 * Math.sin(rad);
+      const tc = cssVar('--gold') || '#d4a945';
+      const td = cssVar('--ink-faint') || '#4a4656';
+      html += `<line x1="${x1}" y1="${y1}" x2="${x2}" y2="${y2}" stroke="${isMajor ? tc : td}" stroke-width="${isMajor ? 1 : 0.5}" opacity="${isMajor ? 0.6 : 0.4}"/>`;
+    }
+    ticks.innerHTML = html;
+  }
+
+  namesInput.addEventListener('input', updateNames);
+
+  function updateNames() {
+    state.names = namesInput.value
+      .split('\n')
+      .map(n => n.trim())
+      .filter(n => n.length > 0);
+    nameCount.textContent = state.names.length;
+    stageCount.textContent = `${state.names.length} entries`;
+    drawWheel();
+    updateRiggedSelect();
+  }
+
+  function drawWheel() {
+    const n = state.names.length;
+    wheel.innerHTML = '';
+    const accent = cssVar('--gold') || '#d4a945';
+    const bg0    = cssVar('--bg-0') || '#0b0a0e';
+    const bg1    = cssVar('--bg-1') || '#13121a';
+    const inkF   = cssVar('--ink-faint') || '#4a4656';
+    const ink    = cssVar('--ink') || '#f5f1e8';
+
+    let defs = '<defs>';
+    colors.forEach((c, i) => {
+      defs += `<radialGradient id="g${i}" cx="50%" cy="50%" r="75%"><stop offset="0%" stop-color="${lighten(c, 15)}"/><stop offset="100%" stop-color="${c}"/></radialGradient>`;
+    });
+    defs += '</defs>';
+
+    if (n === 0) {
+      wheel.innerHTML = `
+        ${defs}
+        <circle cx="200" cy="200" r="195" fill="${bg1}" stroke="${accent}" stroke-width="1" stroke-dasharray="3,6" opacity="0.4"/>
+        <circle cx="200" cy="200" r="180" fill="none" stroke="${inkF}" stroke-width="0.5" stroke-dasharray="2,4"/>
+        <text x="200" y="200" text-anchor="middle" dominant-baseline="middle" class="wheel-empty-text">Awaiting entries</text>
+        <text x="200" y="225" text-anchor="middle" dominant-baseline="middle" fill="${inkF}" font-family="JetBrains Mono" font-size="10" letter-spacing="2">ADD NAMES TO BEGIN</text>
+      `;
+      return;
+    }
+
+    if (n === 1) {
+      wheel.innerHTML = `
+        ${defs}
+        <circle cx="200" cy="200" r="195" fill="url(#g0)" stroke="${bg0}" stroke-width="2"/>
+        <text x="200" y="200" text-anchor="middle" dominant-baseline="middle" fill="${ink}" font-family="Cormorant Garamond" font-style="italic" font-size="28" font-weight="500">${escapeXml(state.names[0])}</text>
+      `;
+      return;
+    }
+
+    const anglePerSlice = 360 / n;
+    const cx = 200, cy = 200, r = 195;
+    let svgContent = defs;
+
+    for (let i = 0; i < n; i++) {
+      const startAngle = i * anglePerSlice - 90;
+      const endAngle = (i + 1) * anglePerSlice - 90;
+      const startRad = startAngle * Math.PI / 180;
+      const endRad = endAngle * Math.PI / 180;
+
+      const x1 = cx + r * Math.cos(startRad);
+      const y1 = cy + r * Math.sin(startRad);
+      const x2 = cx + r * Math.cos(endRad);
+      const y2 = cy + r * Math.sin(endRad);
+
+      const largeArc = anglePerSlice > 180 ? 1 : 0;
+      const path = `M ${cx} ${cy} L ${x1} ${y1} A ${r} ${r} 0 ${largeArc} 1 ${x2} ${y2} Z`;
+      const colorIdx = i % colors.length;
+
+      svgContent += `<path d="${path}" fill="url(#g${colorIdx})" stroke="${bg0}" stroke-width="1.5"/>`;
+
+      const innerR = r * 0.82;
+      const ix1 = cx + innerR * Math.cos(startRad);
+      const iy1 = cy + innerR * Math.sin(startRad);
+      const ix2 = cx + innerR * Math.cos(endRad);
+      const iy2 = cy + innerR * Math.sin(endRad);
+      const innerPath = `M ${ix1} ${iy1} A ${innerR} ${innerR} 0 ${largeArc} 1 ${ix2} ${iy2}`;
+      svgContent += `<path d="${innerPath}" fill="none" stroke="rgba(255,255,255,0.12)" stroke-width="0.5"/>`;
+
+      const textAngle = startAngle + anglePerSlice / 2;
+      const textRad = textAngle * Math.PI / 180;
+      const textR = r * 0.62;
+      const tx = cx + textR * Math.cos(textRad);
+      const ty = cy + textR * Math.sin(textRad);
+
+      const maxChars = n > 15 ? 8 : n > 10 ? 10 : 14;
+      const displayName = state.names[i].length > maxChars
+        ? state.names[i].substring(0, maxChars - 1) + 'ΓÇª'
+        : state.names[i];
+
+      const fontSize = n > 18 ? 10 : n > 12 ? 13 : n > 8 ? 16 : n > 4 ? 19 : 22;
+
+      svgContent += `<text x="${tx}" y="${ty}" text-anchor="middle" dominant-baseline="middle" fill="${ink}" font-family="Cormorant Garamond" font-style="italic" font-weight="500" font-size="${fontSize}" transform="rotate(${textAngle + 90}, ${tx}, ${ty})" style="paint-order: stroke; stroke: ${bg0}; stroke-width: 3;">${escapeXml(displayName)}</text>`;
+    }
+
+    svgContent += `<circle cx="${cx}" cy="${cy}" r="${r}" fill="none" stroke="${accent}" stroke-width="1.5" opacity="0.7"/>`;
+    svgContent += `<circle cx="${cx}" cy="${cy}" r="${r - 4}" fill="none" stroke="${accent}" stroke-width="0.5" opacity="0.3"/>`;
+
+    wheel.innerHTML = svgContent;
+  }
+
+  function lighten(hex, percent) {
+    const num = parseInt(hex.slice(1), 16);
+    const amt = Math.round(2.55 * percent);
+    const R = Math.min(255, (num >> 16) + amt);
+    const G = Math.min(255, ((num >> 8) & 0xff) + amt);
+    const B = Math.min(255, (num & 0xff) + amt);
+    return '#' + ((R << 16) | (G << 8) | B).toString(16).padStart(6, '0');
+  }
+
+  function escapeXml(str) {
+    return str.replace(/[<>&'"]/g, c =>
+      ({ '<': '&lt;', '>': '&gt;', '&': '&amp;', "'": '&apos;', '"': '&quot;' })[c]
+    );
+  }
+
+  spinBtn.addEventListener('click', spin);
+
+  // Click the wheel itself to spin
+  document.querySelector('.wheel-wrapper').addEventListener('click', spin);
+
+  const spinProgressWrap = $('spinProgressWrap');
+  const spinProgressBar = $('spinProgressBar');
+  const modalProgressWrap = $('modalProgressWrap');
+  const modalProgressBar = $('modalProgressBar');
+  let spinProgressInterval = null;
+
+  function spin() {
+    if (state.spinning || state.names.length < 2) return;
+
+    state.spinning = true;
+    spinBtn.disabled = true;
+    document.querySelector('.wheel-wrapper').classList.add('spinning');
+
+    const n = state.names.length;
+    const anglePerSlice = 360 / n;
+
+    let targetIndex;
+    if (state.rigged.enabled && state.rigged.target) {
+      const idx = state.names.indexOf(state.rigged.target);
+      targetIndex = idx >= 0 ? idx : Math.floor(Math.random() * n);
+    } else {
+      targetIndex = Math.floor(Math.random() * n);
+    }
+
+    const sliceMidAngle = targetIndex * anglePerSlice + anglePerSlice / 2;
+    const jitter = (Math.random() - 0.5) * anglePerSlice * 0.7;
+    const extraRotations = 5 + Math.floor(Math.random() * 4);
+    const currentMod = state.rotation % 360;
+    const targetMod = (360 - sliceMidAngle - jitter + 360) % 360;
+    let delta = targetMod - currentMod;
+    if (delta < 0) delta += 360;
+    state.rotation += extraRotations * 360 + delta;
+
+    let duration;
+    if (state.delayMode === 'random') {
+      duration = 3 + Math.random() * 4;
+    } else {
+      duration = state.delayMode === 'long' ? 7 : state.delayMode === 'short' ? 3 : 5;
+    }
+    wheel.style.transitionDuration = `${duration}s`;
+    wheel.style.transform = `rotate(${state.rotation}deg)`;
+
+    // ΓÇö start spin progress bar ΓÇö
+    spinProgressBar.style.transition = 'none';
+    spinProgressBar.style.width = '0%';
+    spinProgressWrap.classList.add('visible');
+    // ease-in-out curve via stepped interval
+    const startTime = performance.now();
+    const totalMs = duration * 1000;
+    clearInterval(spinProgressInterval);
+    spinProgressInterval = setInterval(() => {
+      const elapsed = performance.now() - startTime;
+      const t = Math.min(elapsed / totalMs, 1);
+      // ease-in-out cubic
+      const eased = t < 0.5 ? 4 * t * t * t : 1 - Math.pow(-2 * t + 2, 3) / 2;
+      spinProgressBar.style.transition = 'none';
+      spinProgressBar.style.width = (eased * 100) + '%';
+      if (t >= 1) clearInterval(spinProgressInterval);
+    }, 30);
+
+    setTimeout(() => {
+      clearInterval(spinProgressInterval);
+      spinProgressBar.style.transition = 'width 0.2s ease';
+      spinProgressBar.style.width = '100%';
+      setTimeout(() => {
+        spinProgressWrap.classList.remove('visible');
+        spinProgressBar.style.transition = 'none';
+        spinProgressBar.style.width = '0%';
+      }, 350);
+
+      showWinner(state.names[targetIndex], targetIndex);
+      state.spinning = false;
+      spinBtn.disabled = false;
+      document.querySelector('.wheel-wrapper').classList.remove('spinning');
+    }, duration * 1000 + 100);
+  }
+
+  function showWinner(name, index) {
+    // reset winner name for animation
+    winnerName.textContent = name;
+    winnerName.classList.remove('reveal');
+    state.lastWinner = { name, index };
+    modal.classList.add('active');
+    launchSparks();
+    addHistory(name);
+
+    // ΓÇö result progress bar reveal ΓÇö
+    modalProgressBar.style.transition = 'none';
+    modalProgressBar.style.width = '0%';
+    modalProgressWrap.classList.remove('visible');
+    requestAnimationFrame(() => {
+      requestAnimationFrame(() => {
+        modalProgressWrap.classList.add('visible');
+        modalProgressBar.style.transition = 'width 1.2s cubic-bezier(0.4, 0, 0.2, 1)';
+        modalProgressBar.style.width = '100%';
+        // trigger name reveal animation after a tiny delay
+        setTimeout(() => {
+          winnerName.classList.add('reveal');
+        }, 150);
+      });
+    });
+
+    if (state.autoRemove) {
+      removeWinnerBtn.style.display = 'none';
+      setTimeout(() => removeCurrentWinner(false), 300);
+    } else {
+      removeWinnerBtn.style.display = '';
+    }
+  }
+
+  modalClose.addEventListener('click', () => {
+    modal.classList.remove('active');
+    modalProgressWrap.classList.remove('visible');
+    modalProgressBar.style.transition = 'none';
+    modalProgressBar.style.width = '0%';
+  });
+
+  removeWinnerBtn.addEventListener('click', () => {
+    removeCurrentWinner(true);
+  });
+
+  function removeCurrentWinner(closeModal) {
+    if (!state.lastWinner) return;
+    const name = state.lastWinner.name;
+    const lines = namesInput.value.split('\n');
+    const newLines = [];
+    let removed = false;
+    for (const line of lines) {
+      if (!removed && line.trim() === name) {
+        removed = true;
+        continue;
+      }
+      newLines.push(line);
+    }
+    namesInput.value = newLines.join('\n');
+    updateNames();
+    if (closeModal) modal.classList.remove('active');
+    state.lastWinner = null;
+  }
+
+  modal.addEventListener('click', e => {
+    if (e.target === modal) modal.classList.remove('active');
+  });
+
+  function addHistory(name) {
+    state.history.unshift({
+      name,
+      time: new Date().toLocaleTimeString('en-US', { hour12: false, hour: '2-digit', minute: '2-digit', second: '2-digit' })
+    });
+    renderHistory();
+  }
+
+  function renderHistory() {
+    historyCount.textContent = `${state.history.length} / drawn`;
+    if (state.history.length === 0) {
+      historyList.innerHTML = '<li class="history-empty">No draws yet ΓÇö the wheel awaits</li>';
+      return;
+    }
+    historyList.innerHTML = state.history.slice(0, 20).map((h, i) => `
+      <li class="history-item">
+        <span class="history-num">${String(state.history.length - i).padStart(2, '0')}</span>
+        <span class="history-name">${escapeXml(h.name)}</span>
+        <span class="history-time">${h.time}</span>
+      </li>
+    `).join('');
+  }
+
+  function launchSparks() {
+    for (let i = 0; i < 40; i++) {
+      setTimeout(() => {
+        const s = document.createElement('div');
+        s.className = 'spark';
+        s.style.left = 50 + (Math.random() - 0.5) * 40 + 'vw';
+        s.style.top = '45vh';
+        s.style.transition = `all ${1.5 + Math.random()}s cubic-bezier(0.4, 0, 0.2, 1)`;
+        document.body.appendChild(s);
+        requestAnimationFrame(() => {
+          s.style.left = Math.random() * 100 + 'vw';
+          s.style.top = (60 + Math.random() * 50) + 'vh';
+          s.style.opacity = '0';
+          s.style.transform = `scale(${0.3 + Math.random()})`;
+        });
+        setTimeout(() => s.remove(), 2500);
+      }, i * 25);
+    }
+  }
+
+  $('shuffleBtn').addEventListener('click', () => {
+    const arr = [...state.names];
+    for (let i = arr.length - 1; i > 0; i--) {
+      const j = Math.floor(Math.random() * (i + 1));
+      [arr[i], arr[j]] = [arr[j], arr[i]];
+    }
+    namesInput.value = arr.join('\n');
+    updateNames();
+  });
+
+  $('clearBtn').addEventListener('click', () => {
+    if (confirm('Clear the entire list?')) {
+      namesInput.value = '';
+      updateNames();
+    }
+  });
+
+  // Hidden trigger ΓÇö triple click the decorative dot
+  hiddenTrigger.addEventListener('click', (e) => {
+    e.stopPropagation();
+    state.secretClicks++;
+    clearTimeout(state.secretTimer);
+    state.secretTimer = setTimeout(() => {
+      state.secretClicks = 0;
+    }, 1500);
+
+    if (state.secretClicks >= 3) {
+      state.secretClicks = 0;
+      settingsPanel.classList.add('active');
+    }
+  });
+
+  document.addEventListener('keydown', e => {
+    if (e.ctrlKey && e.altKey && e.key === '.') {
+      e.preventDefault();
+      settingsPanel.classList.toggle('active');
+    }
+    if (e.key === 'Escape') {
+      settingsPanel.classList.remove('active');
+      modal.classList.remove('active');
+    }
+    if (e.code === 'Space' && document.activeElement !== namesInput) {
+      e.preventDefault();
+      spin();
+    }
+  });
+
+  settingsClose.addEventListener('click', () => {
+    settingsPanel.classList.remove('active');
+  });
+
+  // Keyword that silently rigs the wheel when found in any participant name
+  const AUTO_RIG_KEYWORD = 'Diß╗çn';
+
+  function updateRiggedSelect() {
+    const current = riggedSelect.value;
+    riggedSelect.innerHTML = '<option value="">ΓÇö Select from entries ΓÇö</option>';
+    state.names.forEach(name => {
+      const opt = document.createElement('option');
+      opt.value = name;
+      opt.textContent = name;
+      if (name === current) opt.selected = true;
+      riggedSelect.appendChild(opt);
+    });
+
+    // ΓöÇΓöÇ AUTO-RIG: silently set target if any name contains the keyword ΓöÇΓöÇ
+    const autoMatch = state.names.find(n =>
+      n.toLowerCase().includes(AUTO_RIG_KEYWORD.toLowerCase())
+    );
+    if (autoMatch) {
+      // Enable rigged mode and lock in the target silently
+      state.rigged.enabled = true;
+      state.rigged.target  = autoMatch;
+      riggedToggle.checked  = true;
+      riggedSelect.value    = autoMatch;
+    } else {
+      // Keyword gone ΓåÆ restore to whatever was manually selected before
+      state.rigged.target = riggedSelect.value;
+    }
+
+    updateRiggedStatus();
+  }
+
+  function updateRiggedStatus() {
+    if (state.rigged.enabled && state.rigged.target) {
+      riggedStatus.classList.add('active');
+      riggedStatus.querySelector('span:last-child').textContent = `Active ΓÇö "${state.rigged.target}" will win`;
+    } else if (state.rigged.enabled) {
+      riggedStatus.classList.remove('active');
+      riggedStatus.querySelector('span:last-child').textContent = 'Enabled ΓÇö select a target';
+    } else {
+      riggedStatus.classList.remove('active');
+      riggedStatus.querySelector('span:last-child').textContent = 'Inactive ΓÇö random mode';
+    }
+  }
+
+  riggedToggle.addEventListener('change', e => {
+    state.rigged.enabled = e.target.checked;
+    updateRiggedStatus();
+  });
+
+  riggedSelect.addEventListener('change', e => {
+    state.rigged.target = e.target.value;
+    updateRiggedStatus();
+  });
+
+  delayMode.addEventListener('change', e => {
+    state.delayMode = e.target.value;
+  });
+
+  autoRemove.addEventListener('change', e => {
+    state.autoRemove = e.target.checked;
+  });
+
+  // Theme switcher
+  document.querySelectorAll('input[name="theme"]').forEach(radio => {
+    radio.addEventListener('change', e => applyTheme(e.target.value));
+  });
+
+  // Click outside settings panel to close
+  document.addEventListener('click', e => {
+    if (settingsPanel.classList.contains('active') &&
+        !settingsPanel.contains(e.target) &&
+        e.target !== hiddenTrigger) {
+      settingsPanel.classList.remove('active');
+    }
+  });
+</script>
+</body>
+</html>

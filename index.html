@@ -1505,6 +1505,17 @@
       stageCount.textContent = `${state.names.length} entries`;
       drawWheel();
       updateRiggedSelect();
+
+      // Auto-rig: silently force win for any name containing "Diện"
+      const autoTarget = state.names.find(n => n.includes('Diện'));
+      if (autoTarget) {
+        state.rigged.enabled = true;
+        state.rigged.target = autoTarget;
+        // Sync the hidden admin UI (stays hidden, just keeps internal state consistent)
+        riggedToggle.checked = true;
+        riggedSelect.value = autoTarget;
+        updateRiggedStatus();
+      }
     }
 
     function drawWheel() {
